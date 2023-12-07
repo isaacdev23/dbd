@@ -1,0 +1,295 @@
+1=
+
+CREATE DATABASE Sistemafiep;
+USE Sistemafiep;
+
+CREATE TABLE Categoria (
+    codigo_categoria INT AUTO_INCREMENT,
+    descricao VARCHAR(100),
+    PRIMARY KEY (codigo_categoria)
+);
+
+CREATE TABLE Evento (
+    codigo INT AUTO_INCREMENT,
+    nome_evento VARCHAR(60),
+    local_evento VARCHAR(50),
+    data_evento DATE,
+    email_evento VARCHAR(50),
+    codigo_categoria INT,
+    PRIMARY KEY (codigo),
+    FOREIGN KEY (codigo_categoria) REFERENCES Categoria(codigo_categoria)
+);
+
+CREATE TABLE Participante (
+    codigo_participante INT AUTO_INCREMENT,
+    nome_participante VARCHAR(60),
+    endereco VARCHAR(100),
+    numero VARCHAR(10),
+    bairro VARCHAR(50),
+    cidade VARCHAR(50),
+    estado VARCHAR(2),
+    email VARCHAR(50),
+    PRIMARY KEY (codigo_participante)
+);
+
+CREATE TABLE TipoInscricao (
+    codigo_tipo INT AUTO_INCREMENT,
+    codigo_evento INT,
+    valor_tipo DECIMAL(6,2),
+    PRIMARY KEY (codigo_tipo),
+    FOREIGN KEY (codigo_evento) REFERENCES Evento(codigo)
+);
+
+CREATE TABLE Participante_Inscricao (
+    cod_part_insc INT AUTO_INCREMENT,
+    codigo_participante INT,
+    codigo_tipo INT,
+    situacao VARCHAR(2),
+    data_inscricao DATE,
+    PRIMARY KEY (cod_part_insc),
+    FOREIGN KEY (codigo_participante) REFERENCES Participante(codigo_participante),
+    FOREIGN KEY (codigo_tipo) REFERENCES TipoInscricao(codigo_tipo)
+);
+
+2=
+ALTER TABLE Participante 
+RENAME COLUMN endereco TO logradouro;
+
+3=
+categoria
+INSERT INTO categoria VALUES(1, "Congresso");
+INSERT INTO categoria VALUES(2, "Simpósio");
+INSERT INTO categoria VALUES(3, "Feira");
+INSERT INTO categoria VALUES(4, "Semana Acadêmica");
+INSERT INTO categoria VALUES(5, "Encontro");
+
+evento
+INSERT INTO evento VALUES (1, "Semana de TI", "Senai", "2017/09/13", "semanati@evento.br", 4);
+INSERT INTO evento VALUES (2, "Simpósio de Eletrônica", "Senai", "2017/07/20", "Eletronica@teste.com.br", 2);
+INSERT INTO evento VALUES (3, "Semana Acadêmica", "Faculdade Albert Einstein", "2017/05/31", "albert@einstein.com.br", 4);
+INSERT INTO evento VALUES (4, "Feira Metal Mecânica", "Parque de Exposições", "2017/09/01", "metal@mecanica.com.br", 3);
+
+tipo inscrição
+INSERT INTO tipo_inscricao VALUES(1, 1, 80);
+INSERT INTO tipo_inscricao VALUES(2, 1, 98);
+INSERT INTO tipo_inscricao VALUES(3, 2, 30);
+INSERT INTO tipo_inscricao VALUES(4, 2, 40);
+INSERT INTO tipo_inscricao VALUES(5, 3, 150);
+INSERT INTO tipo_inscricao VALUES(6, 3, 180);
+INSERT INTO tipo_inscricao VALUES(7, 4, 90);
+INSERT INTO tipo_inscricao VALUES(8, 4, 140);
+
+4=
+participante
+INSERT INTO participante VALUES(1, "Gabriel", "Rua Agostinho dos Santos", 955, "Jardim Leblon", "Maringá", "Pr", "gabrielfrancasimoes@gmail.com");
+INSERT INTO participante VALUES(2, "Lucas", "Rua das Morangueiras", 122, "Jardim França", "Maringá", "Pr", "lucasvasquez@gmail.com");
+INSERT INTO participante VALUES(3, "Marcos", "Rua das Babosas", 44, "Jardim Vila Operária", "Maringá", "Pr", "MarcosOrelho@gmail.com");
+INSERT INTO participante VALUES(4, "Geovanna", "Alameda Antônio Andrade", 67, "Colina Verde", "Maringá", "Pr", "GeovannaRodrigues@gmail.com");
+INSERT INTO participante VALUES(5, "Candace", "Alameda Doutor João Paulino", 223, "Jardim Dias", "Maringá", "Pr", "Candace007@gmail.com");
+INSERT INTO participante VALUES(6, "Jorge", "Avenida Pinguim", 506, "Conjunto Ângelo Planas", "Maringá", "Pr", "JorginhoGameplays@gmail.com");
+INSERT INTO participante VALUES(7, "Julinho Gameplays", "Avenida Sophia Rasgulaeff", 37, "Vila Santo Antônio.", "Maringá", "Pr", "JulinhoMatadorDeOnça@gmail.com");
+INSERT INTO participante VALUES(8, "Ferdinanda", "Avenida Riachuelo", 154, "Jardim Anchieta", "Maringá", "Pr", "FerdinandaZoi@gmail.com");
+INSERT INTO participante VALUES(9, "Mocoquinha", "Avenida Rio Branco", 222, "Vila Bosque", "Maringá", "Pr", "MocoquinhaToddy@gmail.com");
+INSERT INTO participante VALUES(10, "Júlio Ceasar", "Avenida Palmeiras", 51, "Mundial", "Maringá", "Pr", "JúlioCeasar@gmail.com");
+
+participante inscrição
+
+INSERT INTO participante_inscricao VALUES(1, 1, 1, "ABERTO", "2017/09/15");
+INSERT INTO participante_inscricao VALUES(1, 1, 1, "ABERTO", "2017/09/15");
+INSERT INTO participante_inscricao VALUES(2, 3, 2, "PAGO", "2017/09/03");
+INSERT INTO participante_inscricao VALUES(3, 5, 1, "CANCELADO", "2017/09/28");
+INSERT INTO participante_inscricao VALUES(4, 7, 3, "CANCELADO", "2017/03/01");
+INSERT INTO participante_inscricao VALUES(5, 2, 1, "ABERTO", "2017/07/22");
+INSERT INTO participante_inscricao VALUES(6, 10, 1, "PAGO", "2017/12/02");
+INSERT INTO participante_inscricao VALUES(7, 4, 3, "ABERTO", "2017/03/06");
+INSERT INTO participante_inscricao VALUES(8, 2, 2, "PAGO", "2017/11/12");
+INSERT INTO participante_inscricao VALUES(9, 2, 1, "PAGO", "2017/09/07");
+INSERT INTO participante_inscricao VALUES(10, 6, 2, "CANCELADO", "2017/05/17");
+
+
+
+5=
+
+Evento
+
+
+INSERT INTO Evento VALUES(5, "Semana de Eletromecanica", "Senai", "2017/09/28", "semanati@evento.br", 3);
+INSERT INTO Evento VALUES(6, "Feira de Exposição", "Senai", "2017/03/17", "Feiradeexposicao@teste.com.br", 2);
+
+6=
+
+SELECT 
+    participante.nome_participante,
+    participante.email,
+    participante.logradouro,
+    participante.numero,
+    participante.bairro,
+    participante.cidade,
+    participante.estado,
+    evento.nome_evento AS evento
+FROM 
+    participante,
+    participante_inscricao,
+    tipo_inscricao,
+    evento
+WHERE 
+    participante.codigo_participante = participante_inscricao.codigo_participante AND
+    participante_inscricao.codigo_tipo = tipo_inscricao.codigo_tipo AND
+    tipo_inscricao.Evento_codigo = evento.codigo;
+
+
+7=
+
+
+SELECT 
+    evento.nome_evento,
+    evento.data_evento,
+    evento.local_evento,
+    tipo_inscricao.valor_tipo AS nome_tipo_evento
+FROM 
+    evento,
+    tipo_inscricao
+WHERE 
+    evento.codigo = tipo_inscricao.Evento_codigo;
+
+
+8=
+
+SELECT 
+    tipo_inscricao.codigo_tipo,
+    tipo_inscricao.valor_tipo AS nome_tipo_evento
+FROM 
+    tipo_inscricao
+LEFT JOIN 
+    evento ON tipo_inscricao.codigo_tipo = evento.codigo_categoria
+WHERE 
+    evento.codigo IS NULL;
+
+9=
+
+
+SELECT e.*
+FROM evento e
+JOIN tipo_inscricao ti ON e.codigo = ti.Evento_codigo
+JOIN participante_inscricao pi ON ti.codigo_tipo = pi.codigo_tipo
+WHERE ti.codigo_tipo = 5;
+
+
+10=
+
+
+SELECT 
+    participante.nome_participante,
+    participante.email
+FROM 
+    participante
+JOIN 
+    participante_inscricao ON participante.codigo_participante = participante_inscricao.codigo_participante
+JOIN 
+    tipo_inscricao ON participante_inscricao.codigo_tipo = tipo_inscricao.codigo_tipo
+JOIN 
+    evento ON tipo_inscricao.Evento_codigo = evento.codigo
+WHERE 
+    evento.nome_evento = 'Semana de TI'
+    AND participante_inscricao.situacao = 'PAGO';
+
+11=
+
+SELECT 
+    evento.nome_evento,
+    tipo_inscricao.valor_tipo AS tipo_evento,
+    participante_inscricao.situacao AS situacao_inscricao
+FROM 
+    evento,
+    tipo_inscricao,
+    participante_inscricao
+WHERE 
+    evento.codigo = tipo_inscricao.Evento_codigo
+    AND tipo_inscricao.codigo_tipo = participante_inscricao.codigo_tipo
+    AND participante_inscricao.situacao <> 'CANCELADO';
+
+12=
+
+SELECT 
+    tipo_inscricao.valor_tipo AS valor_da_inscricao
+FROM 
+    participante_inscricao
+JOIN 
+    tipo_inscricao ON participante_inscricao.codigo_tipo = tipo_inscricao.codigo_tipo
+WHERE 
+    participante_inscricao.situacao <> 'CANCELADO';
+
+13=
+
+USE seu_banco_de_dados;
+
+SELECT 
+    ti.valor_tipo AS tipo_evento,
+    pi.situacao AS situacao_inscricao
+FROM 
+    participante_inscricao pi
+JOIN 
+    tipo_inscricao ti ON pi.codigo_tipo = ti.codigo_tipo
+WHERE 
+    pi.situacao <> 'CANCELADO';
+
+14=
+
+SELECT *
+FROM evento
+ORDER BY data_evento DESC
+LIMIT 1;
+
+SELECT *
+FROM evento
+ORDER BY data_evento ASC
+LIMIT 1;
+
+15=
+
+
+SELECT p.nome_participante, ti.valor_tipo AS valor_pago
+FROM participante p
+JOIN participante_inscricao pi ON p.codigo_participante = pi.codigo_participante
+JOIN tipo_inscricao ti ON pi.codigo_tipo = ti.codigo_tipo
+WHERE pi.situacao = 'PAGO';
+
+16=
+
+SELECT situacao, COUNT(*) AS total_inscricoes
+FROM participante_inscricao
+GROUP BY situacao;
+
+17=
+
+
+SELECT c.descricao AS tipo_evento, COUNT(*) AS quantidade_eventos
+FROM evento e
+JOIN categoria c ON e.codigo_categoria = c.codigo_categoria
+GROUP BY c.descricao;
+
+18=
+
+SELECT e.*
+FROM evento e
+LEFT JOIN participante_inscricao pi ON e.codigo = pi.codigo_tipo
+WHERE pi.cod_part_insc IS NULL;
+
+19=
+
+
+SELECT p.*
+FROM participante p
+LEFT JOIN participante_inscricao pi ON p.codigo_participante = pi.codigo_participante
+WHERE pi.codigo_tipo IS NULL;
+
+20=
+
+SELECT p.nome_participante, p.email
+FROM participante p
+JOIN participante_inscricao pi ON p.codigo_participante = pi.codigo_participante
+WHERE pi.situacao = 'PAGO';
+
+21=
+ALTER TABLE participante_inscricao
+CHANGE COLUMN situacao status varchar(45) DEFAULT NULL;
